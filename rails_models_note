@@ -1,0 +1,40 @@
+# table information from annotate
+# belongs_to and has_many correspond to each other
+# rails new {project_name} -d=postgresql
+# bundle exec rails db:create
+# bundle 
+
+class Like < ApplicationRecord
+  validates :liker_id, :chirp_id, presence: true
+  
+  belongs_to :liker
+    primary_key: :id,
+    foreign_key: :liker_id,
+    class_name: :User
+    
+end
+
+class Chirp < ApplicationRecord
+  # validations run when you try to save
+  validates :body, presence: true
+  validate :body_too_long # custom validation
+
+
+end
+
+class User < ApplicationRecord
+  validates :username, :email, :age, presence: true
+  validates :username, :email, uniqueness: true
+  
+  #associations
+  has_many :chirps, # what you want to name association
+    primary_key: :id
+    foreign_key: :author_id
+    class_name: :Chirp
+    
+  has_many :likes,
+    primary_key: :id,
+    foreign_key: :liker_id,
+    class_name: :User
+    
+end
