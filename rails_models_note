@@ -3,6 +3,7 @@
 # rails new {project_name} -d=postgresql
 # bundle exec rails db:create
 # bundle 
+$ rails g model 'name_in_snake_case_singular (the model name)'
 
 class Like < ApplicationRecord
   validates :liker_id, :chirp_id, presence: true
