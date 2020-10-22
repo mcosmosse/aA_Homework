@@ -1,0 +1,38 @@
+$ rails db:create
+$ rails g migrations createUsers
+
+def change
+  create_table :users do |t|
+    t.string :username, null: false
+    t.string :email, null: false
+    t.timestamps
+  end
+end
+ 
+  add_index :users, :username, unique: true
+  add_index :users, :email, unique: true
+  
+$ rails db:migrate             # sets into stone, cannot rollback in production
+$ rails db:migrate:status      # checks for status on migrations, can also check in schema.rb in db folder
+
+$ rails g migration addAgeToUsers
+
+def change 
+  add_column :users, :age, :integer, null: false
+end
+
+$ rails db:migrate:status      # will show that addAgeToUsers is down
+$ rails db:migrate             # to add the new migration
+
+$ rails g migration createChirps
+
+def change
+  create_table :chirps do |t|
+    t.text :body, null: false   # text is for larger entries, string would be more appropriate here with 255 chars
+    t.integer :author_id, null: false   # foreign key
+  end
+  
+  add_index :chirps, :author_id # to implement foreign key
+end
+
+$ rails db:migrate             # check schema after to see if it's been implemented
